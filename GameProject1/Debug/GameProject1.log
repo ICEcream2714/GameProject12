@@ -1,0 +1,8 @@
+﻿  main.cpp
+d:\code\mvs12\gameproject1\gameproject1\main.cpp(81): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+d:\code\mvs12\gameproject1\gameproject1\main.cpp(113): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+d:\code\mvs12\gameproject1\gameproject1\main.cpp(114): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+d:\code\mvs12\gameproject1\gameproject1\main.cpp(147): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+d:\code\mvs12\gameproject1\gameproject1\main.cpp(148): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+d:\code\mvs12\gameproject1\gameproject1\main.cpp(175): warning C4018: '<' : signed/unsigned mismatch
+  GameProject1.vcxproj -> D:\CODE\MVS12\GameProject1\Debug\GameProject1.exe
