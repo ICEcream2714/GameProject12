@@ -84,6 +84,7 @@
     <ClCompile Include="AmoObject.cpp" />
     <ClCompile Include="BaseObject.cpp" />
     <ClCompile Include="Common_Function.cpp" />
+    <ClCompile Include="ExplosionObject2.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainObject.cpp" />
     <ClCompile Include="ExplosionObject.cpp" />
@@ -94,6 +95,7 @@
     <ClInclude Include="BaseObject.h" />
     <ClInclude Include="Common_Function.h" />
     <ClInclude Include="ExplosionObject.h" />
+    <ClInclude Include="ExplosionObject2.h" />
     <ClInclude Include="MainObject.h" />
     <ClInclude Include="ThreatsObject.h" />
   </ItemGroup>

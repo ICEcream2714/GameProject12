@@ -16,7 +16,7 @@ public:
 	MainObject();
 	~MainObject();
 
-	void HandleInputAction(SDL_Event events);
+	void HandleInputAction(SDL_Event events, Mix_Chunk* bullet_sound[2]);
 	void HandleMove();
 	void SetAmoList(std::vector<AmoObject*> amo_list) {p_amo_list_ = amo_list;}
 	std::vector<AmoObject*> GetAmoList() const {return p_amo_list_;}

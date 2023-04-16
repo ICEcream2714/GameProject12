@@ -131,4 +131,6 @@ void SDLCommonFunc::CleanUp()
 {
 	SDL_FreeSurface(g_screen);
 	SDL_FreeSurface(g_bkground);
+
+
 }

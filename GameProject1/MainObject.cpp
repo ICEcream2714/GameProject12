@@ -16,26 +16,26 @@ MainObject::~MainObject()
 
 }
 
-void MainObject::HandleInputAction(SDL_Event events)
+void MainObject::HandleInputAction(SDL_Event events, Mix_Chunk* bullet_sound[2])
 {
 	if (events.type == SDL_KEYDOWN)
 	{
 		switch (events.key.keysym.sym)
 		{
 		case SDLK_w:
-			y_val_ -= HEIGHT_MAIN_OBJECT/8;
+			y_val_ -= MAINOBJECT_MOVE_SPEED;
 			//Todo
 			break;
 		case SDLK_s:
-			y_val_ += HEIGHT_MAIN_OBJECT/8;
+			y_val_ += MAINOBJECT_MOVE_SPEED;
 			//Todo
 			break;
 		case SDLK_d:
-			x_val_ += WIDTH_MAIN_OBJECT/8;
+			x_val_ += MAINOBJECT_MOVE_SPEED;
 			//Todo
 			break;
 		case SDLK_a:
-			x_val_ -= WIDTH_MAIN_OBJECT/8;
+			x_val_ -= MAINOBJECT_MOVE_SPEED;
 			break;
 		default:
 			break;
@@ -45,10 +45,10 @@ void MainObject::HandleInputAction(SDL_Event events)
 	{
 		switch(events.key.keysym.sym )
 		{
-			case SDLK_w: y_val_ += HEIGHT_MAIN_OBJECT/8; break;
-			case SDLK_s: y_val_ -= HEIGHT_MAIN_OBJECT/8; break;
-			case SDLK_a: x_val_ += WIDTH_MAIN_OBJECT/8; break;
-			case SDLK_d: x_val_ -= WIDTH_MAIN_OBJECT/8; break;
+		case SDLK_w: y_val_ += MAINOBJECT_MOVE_SPEED; break;
+		case SDLK_s: y_val_ -= MAINOBJECT_MOVE_SPEED; break;
+		case SDLK_a: x_val_ += MAINOBJECT_MOVE_SPEED; break;
+		case SDLK_d: x_val_ -= MAINOBJECT_MOVE_SPEED; break;
 		}
 	}
 	else if (events.type == SDL_MOUSEBUTTONDOWN)
@@ -57,21 +57,29 @@ void MainObject::HandleInputAction(SDL_Event events)
 
 		if (events.button.button == SDL_BUTTON_LEFT)
 		{
+			Mix_PlayChannel(-1, bullet_sound[0], 0);
+
 			p_amo->SetWidthHeight(WIDTH_LASER, HEIGHT_LASER);
-			p_amo->LoadImg("gfx/laser.png");
+			p_amo->LoadImg(g_name_amo_1);
 			p_amo->set_type(AmoObject::LASER);
+
+			
 		}
 
 		else if (events.button.button == SDL_BUTTON_RIGHT)
 		{
+			Mix_PlayChannel(-1, bullet_sound[1], 0);
+
 			p_amo->SetWidthHeight(WIDTH_SPHERE, HEIGHT_SPHERE);
-			p_amo->LoadImg("gfx/sphere.png");
+			p_amo->LoadImg(g_name_amo_2);
 			p_amo->set_type(AmoObject::SPHERE);
+
+			
 		}
 
 		p_amo->SetRect(this->rect_.x + this->rect_.w - 20, this->rect_.y + this->rect_.h*0.5);
 		p_amo->set_is_move(true);
-		p_amo->set_x_val(20);
+		p_amo->set_x_val(MAINOBJECT_AMO_SPEED);
 		p_amo_list_.push_back(p_amo);
 	}
 

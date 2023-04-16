@@ -1,3 +1,4 @@
+
 #include "ExplosionObject.h"
 
 ExplosionObject::ExplosionObject()
@@ -27,15 +28,31 @@ void ExplosionObject::set_clip()
 	clip_[2].w = EXP_WIDTH;
 	clip_[2].h = EXP_HEIGHT;
 
-	clip_[3].x = 2 * EXP_WIDTH;
+	clip_[3].x = 3 * EXP_WIDTH;
 	clip_[3].y = 0;
 	clip_[3].w = EXP_WIDTH;
 	clip_[3].h = EXP_HEIGHT;
+
+	clip_[4].x = 4 * EXP_WIDTH;
+	clip_[4].y = 0;
+	clip_[4].w = EXP_WIDTH;
+	clip_[4].h = EXP_HEIGHT;
+
+	clip_[5].x = 5 * EXP_WIDTH;
+	clip_[5].y = 0;
+	clip_[5].w = EXP_WIDTH;
+	clip_[5].h = EXP_HEIGHT;
+
+	clip_[6].x = 6 * EXP_WIDTH;
+	clip_[6].y = 0;
+	clip_[6].w = EXP_WIDTH;
+	clip_[6].h = EXP_HEIGHT;
+
 }
 
 void ExplosionObject::ShowEx(SDL_Surface* des)
 {
-	if (frame_ >= 4)
+	if (frame_ >= 7)
 	{
 		frame_ = 0;
 	}

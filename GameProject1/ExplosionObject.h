@@ -14,20 +14,12 @@ public:
 	ExplosionObject();
 	~ExplosionObject();
 	void set_clip();
-	void set_frame(const int& fr)
-	{
-		frame_ = fr;
-	}
+	void set_frame(const int& fr) { frame_ = fr; }
 	void ShowEx(SDL_Surface* des);
-
-
 
 private:
 	int frame_;
-	SDL_Rect clip_[4];
-
+	SDL_Rect clip_[7];
 };
-
-
 
 #endif
