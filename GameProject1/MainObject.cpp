@@ -155,3 +155,65 @@ void MainObject::RemoveAmo(const int& idx)
 		}
 	}
 }
+
+void MainObject::set_clip()
+{
+	clip1_[0].x = 0;
+	clip1_[0].y = 0;
+	clip1_[0].w = WIDTH_MAIN_OBJECT;
+	clip1_[0].h = HEIGHT_MAIN_OBJECT;
+
+	clip1_[1].x = WIDTH_MAIN_OBJECT;
+	clip1_[1].y = 0;
+	clip1_[1].w = WIDTH_MAIN_OBJECT;
+	clip1_[1].h = HEIGHT_MAIN_OBJECT;
+
+	clip1_[2].x = 2 * WIDTH_MAIN_OBJECT;
+	clip1_[2].y = 0;
+	clip1_[2].w = WIDTH_MAIN_OBJECT;
+	clip1_[2].h = HEIGHT_MAIN_OBJECT;
+
+	clip1_[3].x = 3 * WIDTH_MAIN_OBJECT;
+	clip1_[3].y = 0;
+	clip1_[3].w = WIDTH_MAIN_OBJECT;
+	clip1_[3].h = HEIGHT_MAIN_OBJECT;
+
+	clip1_[4].x = 4 * WIDTH_MAIN_OBJECT;
+	clip1_[4].y = 0;
+	clip1_[4].w = WIDTH_MAIN_OBJECT;
+	clip1_[4].h = HEIGHT_MAIN_OBJECT;
+
+	clip1_[5].x = 5 * WIDTH_MAIN_OBJECT;
+	clip1_[5].y = 0;
+	clip1_[5].w = WIDTH_MAIN_OBJECT;
+	clip1_[5].h = HEIGHT_MAIN_OBJECT;
+
+	clip1_[6].x = 6 * WIDTH_MAIN_OBJECT;
+	clip1_[6].y = 0;
+	clip1_[6].w = WIDTH_MAIN_OBJECT;
+	clip1_[6].h = HEIGHT_MAIN_OBJECT;
+
+	clip1_[7].x = 7 * WIDTH_MAIN_OBJECT;
+	clip1_[7].y = 0;
+	clip1_[7].w = WIDTH_MAIN_OBJECT;
+	clip1_[7].h = HEIGHT_MAIN_OBJECT;
+
+	clip1_[8].x = 8 * WIDTH_MAIN_OBJECT;
+	clip1_[8].y = 0;
+	clip1_[8].w = WIDTH_MAIN_OBJECT;
+	clip1_[8].h = HEIGHT_MAIN_OBJECT;
+
+	clip1_[9].x = 9 * WIDTH_MAIN_OBJECT;
+	clip1_[9].y = 0;
+	clip1_[9].w = WIDTH_MAIN_OBJECT;
+	clip1_[9].h = HEIGHT_MAIN_OBJECT;
+}
+
+void MainObject::ShowMainObject(SDL_Surface* des)
+{
+	if (frame1_ >= 10)
+		frame1_ = 0;
+
+	SDLCommonFunc::ApplySurfaceClip(this->p_object_, des, &clip1_[frame1_], rect_.x, rect_.y);
+
+}

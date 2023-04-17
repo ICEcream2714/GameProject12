@@ -7,8 +7,8 @@
 #include "AmoObject.h"
 #include <vector>
 
-#define WIDTH_MAIN_OBJECT 96
-#define HEIGHT_MAIN_OBJECT 96	
+#define WIDTH_MAIN_OBJECT 80
+#define HEIGHT_MAIN_OBJECT 80
 
 class MainObject : public BaseObject
 {
@@ -24,11 +24,18 @@ public:
 	void MakeAmo(SDL_Surface* des);
 	void RemoveAmo(const int& idx);
 
+	void set_clip();
+	void set_frame(const int& fr) { frame1_ = fr; }
+	void ShowMainObject(SDL_Surface* des);
+
 private:
 	int x_val_;
 	int y_val_;
 
 	std::vector<AmoObject*> p_amo_list_;
+
+	int frame1_;
+	SDL_Rect clip1_[10];
 
 };
 

@@ -19,12 +19,12 @@ bool Init()
 		return false;
 
 	//Read file audio
-	g_sound_bullet[0] = Mix_LoadWAV("sfx/gunSound1.wav");
-	g_sound_bullet[1] = Mix_LoadWAV("sfx/gunSound2.wav");
-	g_sound_exp[0] = Mix_LoadWAV("sfx/Explosion2.wav");
-	g_sound_exp[1] = Mix_LoadWAV("sfx/Explosion1.wav");
+	g_sound_bullet[0] = Mix_LoadWAV(g_name_audio_gunSound1);
+	g_sound_bullet[1] = Mix_LoadWAV(g_name_audio_gunSound2);
+	g_sound_exp[0] = Mix_LoadWAV(g_name_audio_explosionSound1);
+	g_sound_exp[1] = Mix_LoadWAV(g_name_audio_explosionSound2);
 
-	g_background_music = Mix_LoadMUS("sfx/backgroundMusic2.wav");
+	g_background_music = Mix_LoadMUS(g_name_audio_backgroundMusic);
 
 	if (g_sound_exp[0] == NULL || g_sound_exp[1] == NULL
 		|| g_sound_bullet[0] == NULL || g_sound_bullet[1] == NULL)
@@ -59,8 +59,9 @@ int main(int arc, char*argv[])
 	//------- Make MainObject ---------
 
 	MainObject plane_object;
-	plane_object.SetRect(100, 200);
 	bool ret = plane_object.LoadImg(g_name_mainObject);
+	plane_object.set_clip();
+	plane_object.SetRect(100, 200);
 	if (!ret)
 	{
 		return 0;
@@ -107,7 +108,7 @@ int main(int arc, char*argv[])
 			{
 				rand_y = SCREEN_HEIGHT * 0.3;
 			}
-
+			p_threat->set_clip();
 			p_threat->SetRect(SCREEN_WIDTH + t*400, rand_y);
 			p_threat->set_x_val(THREAT_MOVE_SPEED);
 
@@ -123,6 +124,9 @@ int main(int arc, char*argv[])
 
 	//-------- Game Loop ----------
 
+	double frame_mainObject = 0;
+	double frame_threatObject = 0;
+
 	while (!is_quit) 
 	{
 		while (SDL_PollEvent(&g_even)) 
@@ -135,6 +139,9 @@ int main(int arc, char*argv[])
 			plane_object.HandleInputAction(g_even, g_sound_bullet);
 		}
 
+		
+
+
 		// Apply background
 		bkgn_x -= 0.5;
 		SDLCommonFunc::ApplySurface(g_bkground, g_screen, bkgn_x, 0);
@@ -144,10 +151,17 @@ int main(int arc, char*argv[])
 			bkgn_x = 0;
 		}
 
-		// Implement MainObject
+		// MainObject Animation
+		plane_object.set_frame(frame_mainObject / 7);
+		plane_object.ShowMainObject(g_screen);
+
 		plane_object.HandleMove();
-		plane_object.Show(g_screen);
 		plane_object.MakeAmo(g_screen);
+
+		++frame_mainObject;
+
+		if (frame_mainObject / 7 >= 10)
+			frame_mainObject = 0;
 
 		
 
@@ -158,9 +172,17 @@ int main(int arc, char*argv[])
 			ThreatsObject* p_threat = (p_threats + tt);
 			if (p_threat)
 			{
+				p_threat->set_frame(frame_threatObject / 10);
 				p_threat->HandleMove(SCREEN_WIDTH, SCREEN_HEIGHT);
-				p_threat->Show(g_screen);
+				p_threat->ShowThreatObject(g_screen);
 				p_threat->MakeAmo(g_screen, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+				++frame_threatObject;
+
+				if (frame_threatObject / 10.0 > 10)
+					frame_threatObject = 0;
+
+
 
 				// Check collision btw ThreatObject's Bullet & MainObject
 
@@ -184,7 +206,7 @@ int main(int arc, char*argv[])
 				// Check Collision between MainObject & ThreatObject
 				bool is_col = SDLCommonFunc::CheckCollision(plane_object.GetRect(), p_threat->GetRect());
 				
-				//----- MainObject's Explosion gfx -----
+				//----- MainObject's Explosion gfx & sfx-----
 				if (is_col || is_col1)
 				{
 					Mix_PlayChannel(-1, g_sound_exp[1], 0);
@@ -201,7 +223,13 @@ int main(int arc, char*argv[])
 
 						//-------- Update screen --------
 						if (SDL_Flip(g_screen) == -1)
+						{
+							delete[] p_threats;
+							SDLCommonFunc::CleanUp();
+							SDL_Quit();
 							return 0;
+						}
+							
 
 					}
 
@@ -217,17 +245,19 @@ int main(int arc, char*argv[])
 				}
 				
 				// Check collision between MainObject's bullet & ThreatObject
+				bool ret_col = false;
+
 				std::vector<AmoObject*> amo_list = plane_object.GetAmoList();
 				for (int im = 0; im < amo_list.size(); im++)
 				{
 					AmoObject* p_amo = amo_list.at(im);
 					if (p_amo != NULL)
 					{
-						bool ret_col = SDLCommonFunc::CheckCollision(p_amo->GetRect(), p_threat->GetRect());
+						ret_col = SDLCommonFunc::CheckCollision(p_amo->GetRect(), p_threat->GetRect());
 						if (ret_col)
 						{
 							int ex = 0;
-							while (ex < 8)
+							while (ex < 8 )
 							{
 								int x_pos = (p_threat->GetRect().x + p_threat->GetRect().w * 0.5) - EXP_WIDTH_2 * 0.5;
 								int y_pos = (p_threat->GetRect().y + p_threat->GetRect().h * 0.5) - EXP_HEIGHT_2 * 0.5;
@@ -236,13 +266,13 @@ int main(int arc, char*argv[])
 								exp_threat.SetRect(x_pos, y_pos);
 								exp_threat.ShowEx(g_screen);
 
+								++ex;
+
 								//SDL_Delay(50);
 
 								//-------- Update screen --------
 								if (SDL_Flip(g_screen) == -1)
 									return 0;
-
-								++ex;
 							}
 
 							p_threat->Reset(SCREEN_WIDTH + tt * 400);
@@ -254,7 +284,9 @@ int main(int arc, char*argv[])
 				}
 				
 			}
+			
 		}
+		
 
 		//-------- Update screen --------
 		if ( SDL_Flip(g_screen) == -1)

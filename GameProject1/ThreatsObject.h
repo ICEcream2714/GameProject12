@@ -7,7 +7,7 @@
 #include "AmoObject.h"
 #include <vector>
 
-#define WIDTH_THREAT 64
+#define WIDTH_THREAT 81
 #define HEIGHT_THREAT 64
 
 class ThreatsObject : public BaseObject
@@ -41,10 +41,17 @@ public:
 	void Reset(const int& xboder);
 	void ResetAmo(AmoObject* p_amo);
 
+	void set_clip();
+	void set_frame(const int& fr) { frame_ = fr; }
+	void ShowThreatObject(SDL_Surface* des);
+
 
 private:
 	int x_val_;
 	int y_val_;
+
+	int frame_;
+	SDL_Rect clip_[10];
 
 	std::vector<AmoObject*> p_amo_list_;
 };
