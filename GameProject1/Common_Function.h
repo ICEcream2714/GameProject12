@@ -21,6 +21,9 @@ const int THREAT_MOVE_SPEED = 3;
 const int MAINOBJECT_AMO_SPEED = 15;
 const int MAINOBJECT_MOVE_SPEED = 7;
 
+const int POS_X_START_MAIN_OBJ = 100;
+const int POS_Y_START_MAIN_OBJ = 200;
+
 static SDL_Surface* g_screen = NULL;
 static SDL_Surface* g_bkground = NULL;
 static SDL_Event g_even;
@@ -43,6 +46,8 @@ static char g_name_audio_gunSound2[] = { "sfx/gunSound2.wav" };
 static char g_name_audio_explosionSound1[] = { "sfx/Explosion2.wav" };
 static char g_name_audio_explosionSound2[] = { "sfx/Explosion1.wav" };
 static char g_name_audio_backgroundMusic[] = { "sfx/backgroundMusic2.wav" };
+
+static char g_name_main_power[] = { "gfx/HeartIcon.png" };
 
 namespace SDLCommonFunc
 {

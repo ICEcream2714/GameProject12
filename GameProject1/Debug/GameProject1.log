@@ -1,13 +1,3 @@
-﻿  main.cpp
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(109): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(147): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(148): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(155): warning C4244: 'argument' : conversion from 'double' to 'const int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(175): warning C4244: 'argument' : conversion from 'double' to 'const int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(191): warning C4018: '<' : signed/unsigned mismatch
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(215): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(216): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(251): warning C4018: '<' : signed/unsigned mismatch
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(262): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(263): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+﻿  PlayerPower.cpp
+d:\code\mvs12\gameproject1\gameproject1\playerpower.cpp(24): warning C4018: '<' : signed/unsigned mismatch
   GameProject1.vcxproj -> D:\CODE\MVS12\GameProject1\Debug\GameProject1.exe

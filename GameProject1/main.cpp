@@ -4,6 +4,7 @@
 #include "ThreatsObject.h"
 #include "ExplosionObject.h"
 #include "ExplosionObject2.h"
+#include "PlayerPower.h"
 
 bool Init()
 {
@@ -54,14 +55,24 @@ int main(int arc, char*argv[])
 		return 0;
 	}
 
+	
 	Mix_PlayMusic(g_background_music, -1);
+
+
+	// ------ Player Power ------
+
+	PlayerPower player_power;
+	player_power.Init();
+
+
+
 
 	//------- Make MainObject ---------
 
 	MainObject plane_object;
 	bool ret = plane_object.LoadImg(g_name_mainObject);
 	plane_object.set_clip();
-	plane_object.SetRect(100, 200);
+	plane_object.SetRect(POS_X_START_MAIN_OBJ, POS_Y_START_MAIN_OBJ);
 	if (!ret)
 	{
 		return 0;
@@ -127,6 +138,8 @@ int main(int arc, char*argv[])
 	double frame_mainObject = 0;
 	double frame_threatObject = 0;
 
+	unsigned int die_number = 0;
+
 	while (!is_quit) 
 	{
 		while (SDL_PollEvent(&g_even)) 
@@ -150,6 +163,12 @@ int main(int arc, char*argv[])
 		{
 			bkgn_x = 0;
 		}
+
+		// Show player power
+		player_power.Render(g_screen);
+
+
+
 
 		// MainObject Animation
 		plane_object.set_frame(frame_mainObject / 7);
@@ -209,6 +228,7 @@ int main(int arc, char*argv[])
 				//----- MainObject's Explosion gfx & sfx-----
 				if (is_col || is_col1)
 				{
+
 					Mix_PlayChannel(-1, g_sound_exp[1], 0);
 					for (int ex = 0; ex < 7; ex++)
 					{
@@ -233,15 +253,36 @@ int main(int arc, char*argv[])
 
 					}
 
-					// MessageBox
-					if (MessageBox(NULL, L"GAME OVER!", L"Info", MB_OK) == IDOK)
+					die_number++;
+					if (die_number <= 2)
 					{
-						delete[] p_threats;
-						SDLCommonFunc::CleanUp();
-						SDL_Quit();
-						return 1;
+						SDL_Delay(1000);
+						plane_object.SetRect(POS_X_START_MAIN_OBJ, POS_Y_START_MAIN_OBJ);
+						player_power.Decrease();
+						player_power.Render(g_screen);
 
+						if (SDL_Flip(g_screen) == -1)
+						{
+							delete[] p_threats;
+							SDLCommonFunc::CleanUp();
+							SDL_Quit();
+							return 0;
+						}
 					}
+					else
+					{
+						// MessageBox
+						if (MessageBox(NULL, L"GAME OVER!", L"Info", MB_OK) == IDOK)
+						{
+							delete[] p_threats;
+							SDLCommonFunc::CleanUp();
+							SDL_Quit();
+							return 1;
+
+						}
+					}
+
+					
 				}
 				
 				// Check collision between MainObject's bullet & ThreatObject
