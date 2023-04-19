@@ -1,39 +1,13 @@
-﻿  TextObject.cpp
-  PlayerPower.cpp
-d:\code\mvs12\gameproject1\gameproject1\playerpower.cpp(24): warning C4018: '<' : signed/unsigned mismatch
-  main.cpp
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(144): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(185): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(186): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(199): warning C4244: 'argument' : conversion from 'double' to 'const int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(219): warning C4244: 'argument' : conversion from 'double' to 'const int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(235): warning C4018: '<' : signed/unsigned mismatch
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(260): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(261): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(317): warning C4018: '<' : signed/unsigned mismatch
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(332): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\main.cpp(333): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
-  Generating Code...
-  Compiling...
-  ThreatsObject.cpp
-d:\code\mvs12\gameproject1\gameproject1\threatsobject.cpp(7): warning C4244: '=' : conversion from 'double' to 'Sint16', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\threatsobject.cpp(19): warning C4018: '<' : signed/unsigned mismatch
-d:\code\mvs12\gameproject1\gameproject1\threatsobject.cpp(42): warning C4244: 'argument' : conversion from 'double' to 'const int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\threatsobject.cpp(52): warning C4018: '<' : signed/unsigned mismatch
-d:\code\mvs12\gameproject1\gameproject1\threatsobject.cpp(65): warning C4244: 'argument' : conversion from 'double' to 'const int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\threatsobject.cpp(81): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\threatsobject.cpp(99): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\threatsobject.cpp(108): warning C4244: 'argument' : conversion from 'double' to 'const int', possible loss of data
-  ExplosionObject.cpp
-  MainObject.cpp
-d:\code\mvs12\gameproject1\gameproject1\mainobject.cpp(80): warning C4244: 'argument' : conversion from 'double' to 'const int', possible loss of data
-d:\code\mvs12\gameproject1\gameproject1\mainobject.cpp(99): warning C4018: '<' : signed/unsigned mismatch
-d:\code\mvs12\gameproject1\gameproject1\mainobject.cpp(143): warning C4018: '<' : signed/unsigned mismatch
-d:\code\mvs12\gameproject1\gameproject1\mainobject.cpp(145): warning C4018: '<' : signed/unsigned mismatch
-  ExplosionObject2.cpp
-  Common_Function.cpp
-  BaseObject.cpp
-  AmoObject.cpp
-  Generating Code...
-MSVCRTD.lib(cinitexe.obj) : warning LNK4098: defaultlib 'msvcrt.lib' conflicts with use of other libs; use /NODEFAULTLIB:library
+﻿  main.cpp
+d:\code\mvs12\gameproject1\gameproject1\main.cpp(147): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+d:\code\mvs12\gameproject1\gameproject1\main.cpp(188): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+d:\code\mvs12\gameproject1\gameproject1\main.cpp(189): warning C4244: 'argument' : conversion from 'double' to 'int', possible loss of data
+d:\code\mvs12\gameproject1\gameproject1\main.cpp(202): warning C4244: 'argument' : conversion from 'double' to 'const int', possible loss of data
+d:\code\mvs12\gameproject1\gameproject1\main.cpp(222): warning C4244: 'argument' : conversion from 'double' to 'const int', possible loss of data
+d:\code\mvs12\gameproject1\gameproject1\main.cpp(238): warning C4018: '<' : signed/unsigned mismatch
+d:\code\mvs12\gameproject1\gameproject1\main.cpp(263): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+d:\code\mvs12\gameproject1\gameproject1\main.cpp(264): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+d:\code\mvs12\gameproject1\gameproject1\main.cpp(320): warning C4018: '<' : signed/unsigned mismatch
+d:\code\mvs12\gameproject1\gameproject1\main.cpp(335): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
+d:\code\mvs12\gameproject1\gameproject1\main.cpp(336): warning C4244: 'initializing' : conversion from 'double' to 'int', possible loss of data
   GameProject1.vcxproj -> D:\CODE\MVS12\GameProject1\Debug\GameProject1.exe

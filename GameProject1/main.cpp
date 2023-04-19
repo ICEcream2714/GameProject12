@@ -84,10 +84,13 @@ int main(int arc, char*argv[])
 	player_power.Init();
 
 
-	// ------ Make point show ------
+	// ------ Make Text... ------
 
 	TextObject point_game;
 	point_game.SetColor(TextObject::WHITE_TEXT);
+
+	TextObject time_game;
+	time_game.SetColor(TextObject::WHITE_TEXT);
 
 
 
@@ -356,6 +359,17 @@ int main(int arc, char*argv[])
 			}
 			
 		}
+
+		// Show time for game
+		std::string str_time = "Time: ";
+		Uint32 time_val = SDL_GetTicks() / 1000;
+		std::string str_val = std::to_string(time_val);
+		str_time += str_val;
+
+		time_game.SetText(str_time);
+		time_game.SetRect(SCREEN_WIDTH - 200, 10);
+		time_game.CreateGameText(g_font_text, g_screen);
+
 
 		// Show point value to screen
 		std::string val_str_point = std::to_string(point_value);
