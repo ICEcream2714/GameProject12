@@ -5,6 +5,11 @@
 #include "ExplosionObject.h"
 #include "ExplosionObject2.h"
 #include "PlayerPower.h"
+#include "TextObject.h"
+
+
+
+TTF_Font* g_font_text = NULL;
 
 bool Init()
 {
@@ -32,6 +37,20 @@ bool Init()
 	{
 		return false;
 	}
+
+	
+	if (TTF_Init() == -1)
+	{
+		return false;
+	}
+
+	g_font_text = TTF_OpenFont(g_name_font_points, 20);
+	if (g_font_text == NULL)
+	{
+		return false;
+	}
+
+
 
 	return true;
 }
@@ -64,6 +83,11 @@ int main(int arc, char*argv[])
 	PlayerPower player_power;
 	player_power.Init();
 
+
+	// ------ Make point show ------
+
+	TextObject point_game;
+	point_game.SetColor(TextObject::WHITE_TEXT);
 
 
 
@@ -114,7 +138,7 @@ int main(int arc, char*argv[])
 				return 0;
 			}
 
-			int rand_y = rand() % 600;
+			int rand_y = rand() % 400;
 			if (rand_y > SCREEN_HEIGHT)
 			{
 				rand_y = SCREEN_HEIGHT * 0.3;
@@ -139,6 +163,7 @@ int main(int arc, char*argv[])
 	double frame_threatObject = 0;
 
 	unsigned int die_number = 0;
+	unsigned int point_value = 0;
 
 	while (!is_quit) 
 	{
@@ -297,6 +322,10 @@ int main(int arc, char*argv[])
 						ret_col = SDLCommonFunc::CheckCollision(p_amo->GetRect(), p_threat->GetRect());
 						if (ret_col)
 						{
+
+							point_value++;
+
+
 							int ex = 0;
 							while (ex < 8 )
 							{
@@ -327,6 +356,14 @@ int main(int arc, char*argv[])
 			}
 			
 		}
+
+		// Show point value to screen
+		std::string val_str_point = std::to_string(point_value);
+		std::string strPoint("Points: ");
+		strPoint += val_str_point;
+
+		point_game.SetText(strPoint);
+		point_game.CreateGameText(g_font_text, g_screen);
 		
 
 		//-------- Update screen --------

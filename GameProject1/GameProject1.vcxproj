@@ -89,6 +89,7 @@
     <ClCompile Include="MainObject.cpp" />
     <ClCompile Include="ExplosionObject.cpp" />
     <ClCompile Include="PlayerPower.cpp" />
+    <ClCompile Include="TextObject.cpp" />
     <ClCompile Include="ThreatsObject.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +100,7 @@
     <ClInclude Include="ExplosionObject2.h" />
     <ClInclude Include="MainObject.h" />
     <ClInclude Include="PlayerPower.h" />
+    <ClInclude Include="TextObject.h" />
     <ClInclude Include="ThreatsObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

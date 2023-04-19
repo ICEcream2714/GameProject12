@@ -2,13 +2,17 @@
 #ifndef COMMON_FUNCTION_H_
 #define COMMON_FUNCTION_H_
 
-#include <Windows.h>
-#include <string>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
+#include <SDL_ttf.h>
+
+#include <Windows.h>
+#include <string>
 #include <cstdlib>
 #include <ctime>
-#include <SDL_mixer.h>
+#include <vector>
+
 
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
@@ -36,10 +40,15 @@ static char g_name_background[] = { "gfx/background.png" };
 static char g_name_mainObject[] = { "gfx/PlaneObject.png" };
 static char	g_name_exp_main[] = { "gfx/Explosion1.png" };
 static char g_name_exp_threat[] = { "gfx/Explosion2.png" };
+
 static char	g_name_threatObject[] = { "gfx/Enemy1.png" };
 static char g_name_amo_1[] = { "gfx/laser.png" };
 static char g_name_amo_2[] = { "gfx/sphere.png" };
 static char g_name_amo_3[] = { "gfx/sphere2.png" };
+
+static char g_name_main_power[] = { "gfx/HeartIcon.png" };
+static char g_name_font_points[] = { "font/prstart.ttf" };
+
 
 static char g_name_audio_gunSound1[] = { "sfx/gunSound1.wav" };
 static char g_name_audio_gunSound2[] = { "sfx/gunSound2.wav" };
@@ -47,7 +56,6 @@ static char g_name_audio_explosionSound1[] = { "sfx/Explosion2.wav" };
 static char g_name_audio_explosionSound2[] = { "sfx/Explosion1.wav" };
 static char g_name_audio_backgroundMusic[] = { "sfx/backgroundMusic2.wav" };
 
-static char g_name_main_power[] = { "gfx/HeartIcon.png" };
 
 namespace SDLCommonFunc
 {
