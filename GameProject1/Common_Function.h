@@ -33,6 +33,9 @@ const int POS_Y_START_MAIN_OBJ = 200;
 static SDL_Surface* g_screen = NULL;
 static SDL_Surface* g_bkground = NULL;
 static SDL_Surface* g_img_menu = NULL;
+static SDL_Surface* g_tutorial = NULL;
+
+
 static SDL_Event g_even;
 
 static Mix_Chunk* g_sound_bullet[2];
@@ -51,6 +54,7 @@ static char g_name_amo_3[] = { "gfx/sphere2.png" };
 
 static char g_name_main_power[] = { "gfx/HeartIcon.png" };
 static char g_name_start_background[] = { "gfx/start_bg.png" };
+static char g_name_tutorial[] = { "gfx/Tutorial.png" };
 
 static char g_name_font_points[] = { "font/prstart.ttf" };
 //static char g_name_font_menu[] = { "font/" }

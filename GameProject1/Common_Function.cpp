@@ -15,6 +15,8 @@ bool SDLCommonFunc::CheckFocusWithRect(const int& x, const int& y, const SDL_Rec
 int SDLCommonFunc::ShowMenu(SDL_Surface* des, TTF_Font* font)
 {
 	g_img_menu = LoadImage(g_name_start_background);
+	g_tutorial = LoadImage(g_name_tutorial);
+
 	if (g_img_menu == NULL)
 	{
 		return 1;
@@ -53,10 +55,13 @@ int SDLCommonFunc::ShowMenu(SDL_Surface* des, TTF_Font* font)
 	int xm = 0;
 	int ym = 0;
 
+	bool check_tutorial = false;
+
 	SDL_Event m_event;
 	while (true)
 	{
 		SDLCommonFunc::ApplySurface(g_img_menu, des, 0, 0);
+
 		for (int i = 0; i < kMenuItemNum; i++)
 		{
 			text_menu[i].CreateGameText(font, des);
@@ -113,7 +118,7 @@ int SDLCommonFunc::ShowMenu(SDL_Surface* des, TTF_Font* font)
 					return 1;
 				else if (mouse_tutorial)
 				{
-
+					check_tutorial = true;
 				}
 
 					/*for (int i = 0; i < kMenuItemNum; i++)
@@ -129,7 +134,7 @@ int SDLCommonFunc::ShowMenu(SDL_Surface* des, TTF_Font* font)
 			case SDL_KEYDOWN:
 				if (m_event.key.keysym.sym == SDLK_ESCAPE)
 				{
-					return 1;
+					check_tutorial = false;
 				}
 			break;
 
@@ -137,6 +142,11 @@ int SDLCommonFunc::ShowMenu(SDL_Surface* des, TTF_Font* font)
 				break;
 			}
 		}
+		if (check_tutorial)
+		{
+			SDLCommonFunc::ApplySurface(g_tutorial, des, 160, 90);
+		}
+
 		SDL_Flip(des);
 	}
 	return 1;

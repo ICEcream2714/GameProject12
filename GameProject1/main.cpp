@@ -88,11 +88,14 @@ int main(int arc, char*argv[])
 
 	// ------ Make Text... ------
 
-	TextObject point_game;
-	point_game.SetColor(TextObject::WHITE_TEXT);
+	TextObject points_game;
+	points_game.SetColor(TextObject::WHITE_TEXT);
 
 	TextObject time_game;
 	time_game.SetColor(TextObject::WHITE_TEXT);
+
+	TextObject high_score;
+	high_score.SetColor(TextObject::WHITE_TEXT);
 
 
 
@@ -125,7 +128,6 @@ int main(int arc, char*argv[])
 	{
 		return 0;
 	}
-
 
 
 	//-------- Make ThreatObject ---------
@@ -168,7 +170,8 @@ int main(int arc, char*argv[])
 	double frame_threatObject = 0;
 
 	unsigned int die_number = 0;
-	unsigned int point_value = 0;
+	unsigned int points_value = 0;
+	unsigned int highest_point_value = 0;
 
 	int ret_menu = SDLCommonFunc::ShowMenu(g_screen, g_font_menu);
 	if (ret_menu == 1)
@@ -206,9 +209,6 @@ int main(int arc, char*argv[])
 
 		// Show player power
 		player_power.Render(g_screen);
-
-
-
 
 		// MainObject Animation
 		plane_object.set_frame(frame_mainObject / 7);
@@ -338,7 +338,7 @@ int main(int arc, char*argv[])
 						if (ret_col)
 						{
 
-							point_value++;
+							points_value++;
 
 
 							int ex = 0;
@@ -372,25 +372,43 @@ int main(int arc, char*argv[])
 			
 		}
 
-			// Show time for game
-			std::string str_time = "Time: ";
-			Uint32 time_val = SDL_GetTicks() / 1000;
-			std::string str_val = std::to_string(time_val);
-			str_time += str_val;
+		// Show time for game
 
-			time_game.SetText(str_time);
-			time_game.SetRect(SCREEN_WIDTH - 200, 10);
-			time_game.CreateGameText(g_font_text, g_screen);
+		std::string str_time = "TIME ";
+		Uint32 time_val = SDL_GetTicks() / 1000;
+		std::string str_val = std::to_string(time_val);
+		str_time += str_val;
+
+		time_game.SetText(str_time);
+		time_game.SetRect(SCREEN_WIDTH - 200, 40);
+		time_game.CreateGameText(g_font_text, g_screen);
 
 		
 
 		// Show point value to screen
-		std::string val_str_point = std::to_string(point_value);
-		std::string strPoint("Points: ");
+
+		std::string val_str_point = std::to_string(points_value);
+		std::string strPoint("POINTS: ");
 		strPoint += val_str_point;
 
-		point_game.SetText(strPoint);
-		point_game.CreateGameText(g_font_text, g_screen);
+		points_game.SetText(strPoint);
+		points_game.CreateGameText(g_font_text, g_screen);
+
+
+		// Show high score to screen
+
+		if (highest_point_value < points_value)
+		{
+			highest_point_value = points_value;
+		}
+
+		std::string val_str_hScrore = std::to_string(highest_point_value);
+		std::string strHighScore("HIGHSCORE: ");
+		strHighScore += val_str_hScrore;
+
+		high_score.SetText(strHighScore);
+		high_score.SetRect(SCREEN_WIDTH - 250, 10);
+		high_score.CreateGameText(g_font_text, g_screen);
 		
 
 		//-------- Update screen --------
