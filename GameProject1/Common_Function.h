@@ -21,7 +21,7 @@ const int SCREEN_HEIGHT = 720;
 const int SCREEN_BPP = 32;
 
 const int NUM_THREATS = 5;
-const int THREAT_AMO_SPEED = 7;
+const int THREAT_AMO_SPEED = 9;
 const int THREAT_MOVE_SPEED = 3;
 
 const int MAINOBJECT_AMO_SPEED = 15;

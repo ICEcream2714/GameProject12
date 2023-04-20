@@ -60,8 +60,10 @@ bool Init()
 
 int main(int arc, char*argv[])
 {
-	double bkgn_x = 0;
 
+	
+
+	double bkgn_x = 0;
 
 	bool is_quit = false;
 	if (Init() == false)
@@ -76,8 +78,12 @@ int main(int arc, char*argv[])
 		return 0;
 	}
 
-	
 	Mix_PlayMusic(g_background_music, -1);
+
+
+	unsigned int highest_point_value = 0;
+
+SetRestart:
 
 
 	// ------ Player Power ------
@@ -104,7 +110,7 @@ int main(int arc, char*argv[])
 	MainObject plane_object;
 	bool ret = plane_object.LoadImg(g_name_mainObject);
 	plane_object.set_clip();
-	plane_object.SetRect(POS_X_START_MAIN_OBJ, POS_Y_START_MAIN_OBJ);
+	plane_object.SetRect(POS_X_START_MAIN_OBJ, POS_Y_START_MAIN_OBJ) ;
 	if (!ret)
 	{
 		return 0;
@@ -128,6 +134,7 @@ int main(int arc, char*argv[])
 	{
 		return 0;
 	}
+
 
 
 	//-------- Make ThreatObject ---------
@@ -171,16 +178,14 @@ int main(int arc, char*argv[])
 
 	unsigned int die_number = 0;
 	unsigned int points_value = 0;
-	unsigned int highest_point_value = 0;
+
+
+	Uint32 time_val = 0;
 
 	int ret_menu = SDLCommonFunc::ShowMenu(g_screen, g_font_menu);
 	if (ret_menu == 1)
 	{
 		is_quit = true;
-	}
-	else
-	{
-
 	}
 
 	while (!is_quit) 
@@ -194,7 +199,6 @@ int main(int arc, char*argv[])
 			}
 			plane_object.HandleInputAction(g_even, g_sound_bullet);
 		}
-
 		
 
 
@@ -311,15 +315,19 @@ int main(int arc, char*argv[])
 					}
 					else
 					{
-						// MessageBox
-						if (MessageBox(NULL, L"GAME OVER!", L"Info", MB_OK) == IDOK)
-						{
-							delete[] p_threats;
-							SDLCommonFunc::CleanUp();
-							SDL_Quit();
-							return 1;
+						delete[] p_threats;
+						SDL_Delay(1000);
+						goto SetRestart;
+						
+						//// MessageBox
+						//if (MessageBox(NULL, L"GAME OVER!", L"Info", MB_OK) == IDOK)
+						//{
+						//	delete[] p_threats;
+						//	SDLCommonFunc::CleanUp();
+						//	SDL_Quit();
+						//	return 1;
 
-						}
+						//}
 					}
 
 					
@@ -372,18 +380,18 @@ int main(int arc, char*argv[])
 			
 		}
 
-		// Show time for game
+		//// Show time for game
 
-		std::string str_time = "TIME ";
-		Uint32 time_val = SDL_GetTicks() / 1000;
-		std::string str_val = std::to_string(time_val);
-		str_time += str_val;
+		//std::string str_time = "TIME ";
+		//time_val = SDL_GetTicks() / 1000;
+		//std::string str_val = std::to_string(time_val);
+		//str_time += str_val;
 
-		time_game.SetText(str_time);
-		time_game.SetRect(SCREEN_WIDTH - 200, 40);
-		time_game.CreateGameText(g_font_text, g_screen);
+		//time_game.SetText(str_time);
+		//time_game.SetRect(SCREEN_WIDTH - 200, 40);
+		//time_game.CreateGameText(g_font_text, g_screen);
 
-		
+		//
 
 		// Show point value to screen
 

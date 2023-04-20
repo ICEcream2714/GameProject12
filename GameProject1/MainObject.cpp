@@ -37,6 +37,8 @@ void MainObject::HandleInputAction(SDL_Event events, Mix_Chunk* bullet_sound[2])
 		case SDLK_a:
 			x_val_ -= MAINOBJECT_MOVE_SPEED;
 			break;
+		case SDLK_ESCAPE:
+			;
 		default:
 			break;
 		}
@@ -85,7 +87,7 @@ void MainObject::HandleInputAction(SDL_Event events, Mix_Chunk* bullet_sound[2])
 
 	else if (events.type == SDL_MOUSEBUTTONUP)
 	{
-
+		
 	}
 
 	else
