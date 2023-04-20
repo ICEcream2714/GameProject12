@@ -10,6 +10,7 @@
 
 
 TTF_Font* g_font_text = NULL;
+TTF_Font* g_font_menu = NULL;
 
 bool Init()
 {
@@ -45,7 +46,8 @@ bool Init()
 	}
 
 	g_font_text = TTF_OpenFont(g_name_font_points, 20);
-	if (g_font_text == NULL)
+	g_font_menu = TTF_OpenFont(g_name_font_points, 35);
+	if (g_font_text == NULL || g_font_menu == NULL)
 	{
 		return false;
 	}
@@ -167,6 +169,16 @@ int main(int arc, char*argv[])
 
 	unsigned int die_number = 0;
 	unsigned int point_value = 0;
+
+	int ret_menu = SDLCommonFunc::ShowMenu(g_screen, g_font_menu);
+	if (ret_menu == 1)
+	{
+		is_quit = true;
+	}
+	else
+	{
+
+	}
 
 	while (!is_quit) 
 	{
@@ -360,16 +372,17 @@ int main(int arc, char*argv[])
 			
 		}
 
-		// Show time for game
-		std::string str_time = "Time: ";
-		Uint32 time_val = SDL_GetTicks() / 1000;
-		std::string str_val = std::to_string(time_val);
-		str_time += str_val;
+			// Show time for game
+			std::string str_time = "Time: ";
+			Uint32 time_val = SDL_GetTicks() / 1000;
+			std::string str_val = std::to_string(time_val);
+			str_time += str_val;
 
-		time_game.SetText(str_time);
-		time_game.SetRect(SCREEN_WIDTH - 200, 10);
-		time_game.CreateGameText(g_font_text, g_screen);
+			time_game.SetText(str_time);
+			time_game.SetRect(SCREEN_WIDTH - 200, 10);
+			time_game.CreateGameText(g_font_text, g_screen);
 
+		
 
 		// Show point value to screen
 		std::string val_str_point = std::to_string(point_value);

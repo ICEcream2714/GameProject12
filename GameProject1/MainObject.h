@@ -8,7 +8,7 @@
 #include <vector>
 
 #define WIDTH_MAIN_OBJECT 80
-#define HEIGHT_MAIN_OBJECT 80
+#define HEIGHT_MAIN_OBJECT 70
 
 class MainObject : public BaseObject
 {

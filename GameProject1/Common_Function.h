@@ -14,6 +14,8 @@
 #include <vector>
 
 
+
+
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
 const int SCREEN_BPP = 32;
@@ -30,6 +32,7 @@ const int POS_Y_START_MAIN_OBJ = 200;
 
 static SDL_Surface* g_screen = NULL;
 static SDL_Surface* g_bkground = NULL;
+static SDL_Surface* g_img_menu = NULL;
 static SDL_Event g_even;
 
 static Mix_Chunk* g_sound_bullet[2];
@@ -47,8 +50,10 @@ static char g_name_amo_2[] = { "gfx/sphere.png" };
 static char g_name_amo_3[] = { "gfx/sphere2.png" };
 
 static char g_name_main_power[] = { "gfx/HeartIcon.png" };
-static char g_name_font_points[] = { "font/prstart.ttf" };
+static char g_name_start_background[] = { "gfx/start_bg.png" };
 
+static char g_name_font_points[] = { "font/prstart.ttf" };
+//static char g_name_font_menu[] = { "font/" }
 
 static char g_name_audio_gunSound1[] = { "sfx/gunSound1.wav" };
 static char g_name_audio_gunSound2[] = { "sfx/gunSound2.wav" };
@@ -60,10 +65,14 @@ static char g_name_audio_backgroundMusic[] = { "sfx/backgroundMusic2.wav" };
 namespace SDLCommonFunc
 {
 	SDL_Surface* LoadImage(std::string file_path);
-	void ApplySurface(SDL_Surface* src, SDL_Surface* des, int x, int y);
+	SDL_Rect ApplySurface(SDL_Surface* src, SDL_Surface* des, int x, int y);
 	void ApplySurfaceClip(SDL_Surface* src, SDL_Surface* des, SDL_Rect* clip, int x, int y);
 	void CleanUp();
 	bool CheckCollision(const SDL_Rect& object1, const SDL_Rect& object2);
+
+	int ShowMenu(SDL_Surface* des, TTF_Font* font);
+
+	bool CheckFocusWithRect(const int& x, const int& y, const SDL_Rect& rect);
 
 
 }
