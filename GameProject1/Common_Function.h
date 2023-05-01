@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
+#include <cmath>
 
 
 
@@ -24,11 +25,18 @@ const int NUM_THREATS = 5;
 const int THREAT_AMO_SPEED = 9;
 const int THREAT_MOVE_SPEED = 3;
 
+const int BOSS_MOVE_SPEED = 2;
+const int BOSS_MISSILE_SPEED = 11;
+const int MAX_BOSS_HIT_COUNT = 10;
+
 const int MAINOBJECT_AMO_SPEED = 15;
 const int MAINOBJECT_MOVE_SPEED = 7;
 
 const int POS_X_START_MAIN_OBJ = 100;
 const int POS_Y_START_MAIN_OBJ = 200;
+
+const int TIME_UNTIL_BOSS = 5;
+// rand() % 20 + 15
 
 static SDL_Surface* g_screen = NULL;
 static SDL_Surface* g_bkground = NULL;
@@ -52,9 +60,13 @@ static char g_name_amo_1[] = { "gfx/laser.png" };
 static char g_name_amo_2[] = { "gfx/sphere.png" };
 static char g_name_amo_3[] = { "gfx/sphere2.png" };
 
+static char g_name_missile[] = { "gfx/missile1.png" };
+
 static char g_name_main_power[] = { "gfx/HeartIcon.png" };
 static char g_name_start_background[] = { "gfx/start_bg.png" };
 static char g_name_tutorial[] = { "gfx/Tutorial.png" };
+
+static char g_name_boss_object[] = { "gfx/Boss-Idle1.png" };
 
 static char g_name_font_points[] = { "font/prstart.ttf" };
 //static char g_name_font_menu[] = { "font/" }

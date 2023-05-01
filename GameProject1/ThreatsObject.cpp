@@ -89,6 +89,8 @@ void ThreatsObject::HandleInputAction(SDL_Event events)
 
 }
 
+
+
 void ThreatsObject::Reset(const int& xboder)
 {
 	rect_.x = xboder;
@@ -164,7 +166,7 @@ void ThreatsObject::set_clip()
 
 void ThreatsObject::ShowThreatObject(SDL_Surface* des)
 {
-	if (frame_ >= 7)
+	if (frame_ >= 9)
 	{
 		frame_ = 0;
 	}

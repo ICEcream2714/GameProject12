@@ -4,7 +4,7 @@
 
 TextObject::TextObject()
 {
-	rect_.x = 540;
+	rect_.x = 530;
 	rect_.y = 10;
 	text_color_.r = 255;
 	text_color_.g = 255;

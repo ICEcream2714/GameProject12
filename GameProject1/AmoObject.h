@@ -9,6 +9,9 @@
 #define WIDTH_SPHERE 10
 #define HEIGHT_SPHERE 10
 
+#define WIDTH_MISSILE 120
+#define HEIGHT_MISSILE 64
+
 class AmoObject : public BaseObject
 {
 public:
@@ -16,14 +19,17 @@ public:
 	{
 		NONE = 0,
 		LASER = 1,
-		SPHERE = 2
+		SPHERE = 2,
+		MISSILE = 3
 	};
 
 	AmoObject();
 	~AmoObject();
 	void HandleInputAction(SDL_Event events);
 	void HandleMove(const int& x_border, const int& y_border);
+	
 	void HandleMoveRightToLeft();
+	void Boss_HandleMoveRightToLeft();
 
 	int get_type() const {return amo_type_;}
 	void set_type(const int& type) {amo_type_ = type;}
