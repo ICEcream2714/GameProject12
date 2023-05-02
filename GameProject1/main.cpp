@@ -46,8 +46,8 @@ bool Init()
 		return false;
 	}
 
-	g_font_text = TTF_OpenFont(g_name_font_points, 20);
-	g_font_menu = TTF_OpenFont(g_name_font_points, 35);
+	g_font_text = TTF_OpenFont(g_name_font_score, 20);
+	g_font_menu = TTF_OpenFont(g_name_font_score, 35);
 	if (g_font_text == NULL || g_font_menu == NULL)
 	{
 		return false;
@@ -61,6 +61,8 @@ bool Init()
 
 int main(int arc, char*argv[])
 {
+	srand(time(NULL));
+
 	double bkgn_x = 0;
 
 	bool is_quit = false;
@@ -83,11 +85,16 @@ int main(int arc, char*argv[])
 	Mix_PlayMusic(g_background_music, -1);
 
 
-	unsigned int highest_point_value = 0;
+	unsigned int highest_score_value = 0;
 	int pre_time_val = 0;
+
+	int main_rand_y = rand() % 600 + 60;
 
 SetRestart:
 
+	int max_boss_hit = MAX_BOSS_HIT_COUNT;
+
+	int boss_time = 0;
 
 	// ------ Player Power ------
 
@@ -97,8 +104,8 @@ SetRestart:
 
 	// ------ Init Texts... ------
 
-	TextObject points_game;
-	points_game.SetColor(TextObject::WHITE_TEXT);
+	TextObject score_game;
+	score_game.SetColor(TextObject::WHITE_TEXT);
 
 	TextObject time_game;
 	time_game.SetColor(TextObject::WHITE_TEXT);
@@ -113,7 +120,7 @@ SetRestart:
 	MainObject plane_object;
 	bool ret = plane_object.LoadImg(g_name_mainObject);
 	plane_object.set_clip();
-	plane_object.SetRect(POS_X_START_MAIN_OBJ, POS_Y_START_MAIN_OBJ) ;
+	plane_object.SetRect(POS_X_START_MAIN_OBJ, main_rand_y) ;
 	if (!ret)
 	{
 		return 0;
@@ -196,15 +203,19 @@ SetRestart:
 	double frame_bossObject = 0;
 
 	unsigned int die_number = 0;
-	unsigned int points_value = 0;
+	unsigned int score_value = 0;
 
 	int boss_hit_cnt = 0;
 
 	Uint32 time_val = SDL_GetTicks() / 1000 - pre_time_val;
 
 	double y_amo = 0;
+	bool boss_die = true;
+	bool exit = false;
 
-	
+	bool is_invicible = false;
+	Uint32 time_invicible = 0;
+
 
 	// Init Main Menu
 
@@ -212,6 +223,10 @@ SetRestart:
 	if (ret_menu == 1)
 	{
 		is_quit = true;
+	}
+	if (ret_menu == 0)
+	{
+		pre_time_val += time_val;
 	}
 
 
@@ -226,10 +241,26 @@ SetRestart:
 				is_quit = true;
 				break;
 			}
-			plane_object.HandleInputAction(g_even, g_sound_bullet);
+			plane_object.HandleInputAction(g_even, g_sound_bullet, exit);
 		}
 		
-		int rand_y = 
+		if (exit)
+		{
+			pre_time_val += time_val;
+			goto SetRestart;
+		}
+
+		if (time_val < time_invicible)
+		{
+			is_invicible = true;
+		}
+		else
+			is_invicible = false;
+
+		if (boss_die == true)
+			boss_hit_cnt == 0;
+
+		main_rand_y = rand() % 600 + 60;
 
 		time_val = SDL_GetTicks() / 1000 - pre_time_val;
 
@@ -260,10 +291,18 @@ SetRestart:
 
 		// ------- Run BossObject -------
 
+		if (time_val % TIME_UNTIL_BOSS == 0 && (time_val - boss_time) > 10 &&
+			boss_die == true && boss_hit_cnt < max_boss_hit)
+		{
+			max_boss_hit += ADD_MAX_BOSS_HIT_COUNT;
+			boss_die = false;
+		}
+
 		if (time_val > TIME_UNTIL_BOSS)
 		{
-			if (boss_hit_cnt < MAX_BOSS_HIT_COUNT)
+			if (boss_hit_cnt < max_boss_hit && boss_die == false)
 			{
+
 				boss_object.set_frame(frame_bossObject / 7);
 				boss_object.HandleMove(SCREEN_WIDTH, SCREEN_HEIGHT);
 				boss_object.ShowBossObject(g_screen);
@@ -304,7 +343,7 @@ SetRestart:
 					}
 				}
 
-				if (is_col_missile || is_col_boss)
+				if ((is_col_missile || is_col_boss) && is_invicible == false)
 				{
 
 					Mix_PlayChannel(-1, g_sound_exp[1], 0);
@@ -333,7 +372,8 @@ SetRestart:
 					if (die_number <= 2)
 					{
 						SDL_Delay(1000);
-						plane_object.SetRect(POS_X_START_MAIN_OBJ, POS_Y_START_MAIN_OBJ);
+						time_invicible = time_val + MAINOBJECT_TIME_INVICIBLE;
+						plane_object.SetRect(POS_X_START_MAIN_OBJ, main_rand_y);
 						player_power.Decrease();
 						player_power.Render(g_screen);
 
@@ -392,9 +432,20 @@ SetRestart:
 									return 0;
 							}
 
-							if (boss_hit_cnt == MAX_BOSS_HIT_COUNT)
+							if (boss_hit_cnt == max_boss_hit)
 							{
-								points_value += 10;
+								score_value += max_boss_hit - ADD_MAX_BOSS_HIT_COUNT;
+								boss_time = time_val;
+
+								for (int m = 0; m < missile_arr.size(); m++)
+								{
+									AmoObject* p_missile = missile_arr.at(m);
+									if (p_missile)
+									{
+										boss_object.ResetAmo(p_missile);
+									}
+								}
+
 							}
 
 							plane_object.RemoveAmo(im);
@@ -410,7 +461,9 @@ SetRestart:
 
 			else
 			{
-
+				boss_die = true;
+				boss_hit_cnt = 0;
+				
 				boss_object.set_frame(frame_bossObject / 7);
 				boss_object.HandleMoveBackward(SCREEN_WIDTH, SCREEN_HEIGHT);
 				boss_object.ShowBossObject(g_screen);
@@ -420,12 +473,11 @@ SetRestart:
 				if (frame_bossObject / 7 >= 10)
 					frame_bossObject = 0;
 
-
 			}
 			
 		}
 
-		//----- Run Threat -----
+		// ------- Run Threat -------
 
 		for (int tt = 0; tt < NUM_THREATS; tt++)
 		{
@@ -433,14 +485,14 @@ SetRestart:
 			ThreatsObject* p_threat = (p_threats + tt);
 			if (p_threat)
 			{
-				p_threat->set_frame(frame_threatObject / 10);
+				p_threat->set_frame(frame_threatObject / 15);
 				p_threat->HandleMove(SCREEN_WIDTH, SCREEN_HEIGHT);
 				p_threat->ShowThreatObject(g_screen);
 				p_threat->MakeAmo(g_screen, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 				++frame_threatObject;
 
-				if (frame_threatObject / 10.0 > 10)
+				if (frame_threatObject / 15 >= 10)
 					frame_threatObject = 0;
 
 
@@ -468,7 +520,7 @@ SetRestart:
 				bool is_col = SDLCommonFunc::CheckCollision(plane_object.GetRect(), p_threat->GetRect());
 				
 				//----- MainObject's Explosion gfx & sfx-----
-				if (is_col || is_col1)
+				if ((is_col || is_col1) && is_invicible == false)
 				{
 
 					Mix_PlayChannel(-1, g_sound_exp[1], 0);
@@ -480,6 +532,16 @@ SetRestart:
 						exp_main.set_frame(ex);
 						exp_main.SetRect(x_pos, y_pos);
 						exp_main.ShowEx(g_screen);
+
+						if (is_col)
+						{
+							int x_pos1 = (p_threat->GetRect().x + p_threat->GetRect().w * 0.5) - EXP_WIDTH_2 * 0.5;
+							int y_pos1 = (p_threat->GetRect().y + p_threat->GetRect().h * 0.5) - EXP_HEIGHT_2 * 0.5;
+
+							exp_threat.set_frame(ex);
+							exp_threat.SetRect(x_pos1, y_pos1);
+							exp_threat.ShowEx(g_screen);
+						}
 
 						SDL_Delay(50);
 
@@ -495,11 +557,14 @@ SetRestart:
 
 					}
 
+					p_threat->Reset(SCREEN_WIDTH);
+
 					die_number++;
 					if (die_number <= 2)
 					{
 						SDL_Delay(1000);
-						plane_object.SetRect(POS_X_START_MAIN_OBJ, POS_Y_START_MAIN_OBJ);
+						time_invicible = time_val + MAINOBJECT_TIME_INVICIBLE;
+						plane_object.SetRect(POS_X_START_MAIN_OBJ, main_rand_y);
 						player_power.Decrease();
 						player_power.Render(g_screen);
 
@@ -545,7 +610,7 @@ SetRestart:
 						if (ret_col)
 						{
 
-							points_value++;
+							score_value++;
 
 
 							int ex = 0;
@@ -594,24 +659,24 @@ SetRestart:
 
 		
 
-		// Show point value to screen
+		// Show score value to screen
 
-		std::string val_str_point = std::to_string(points_value);
-		std::string strPoint("POINTS: ");
-		strPoint += val_str_point;
+		std::string val_str_score = std::to_string(score_value);
+		std::string strscore("SCORE: ");
+		strscore += val_str_score;
 
-		points_game.SetText(strPoint);
-		points_game.CreateGameText(g_font_text, g_screen);
+		score_game.SetText(strscore);
+		score_game.CreateGameText(g_font_text, g_screen);
 
 
 		// Show high score to screen
 
-		if (highest_point_value < points_value)
+		if (highest_score_value < score_value)
 		{
-			highest_point_value = points_value;
+			highest_score_value = score_value;
 		}
 
-		std::string val_str_hScrore = std::to_string(highest_point_value);
+		std::string val_str_hScrore = std::to_string(highest_score_value);
 		std::string strHighScore("HIGHSCORE: ");
 		strHighScore += val_str_hScrore;
 

@@ -28,14 +28,16 @@ const int THREAT_MOVE_SPEED = 3;
 const int BOSS_MOVE_SPEED = 2;
 const int BOSS_MISSILE_SPEED = 11;
 const int MAX_BOSS_HIT_COUNT = 10;
+const int ADD_MAX_BOSS_HIT_COUNT = 30;
 
 const int MAINOBJECT_AMO_SPEED = 15;
 const int MAINOBJECT_MOVE_SPEED = 7;
+const int MAINOBJECT_TIME_INVICIBLE = 5;
 
 const int POS_X_START_MAIN_OBJ = 100;
 const int POS_Y_START_MAIN_OBJ = 200;
 
-const int TIME_UNTIL_BOSS = 5;
+const int TIME_UNTIL_BOSS = 15;
 // rand() % 20 + 15
 
 static SDL_Surface* g_screen = NULL;
@@ -68,7 +70,7 @@ static char g_name_tutorial[] = { "gfx/Tutorial.png" };
 
 static char g_name_boss_object[] = { "gfx/Boss-Idle1.png" };
 
-static char g_name_font_points[] = { "font/prstart.ttf" };
+static char g_name_font_score[] = { "font/prstart.ttf" };
 //static char g_name_font_menu[] = { "font/" }
 
 static char g_name_audio_gunSound1[] = { "sfx/gunSound1.wav" };

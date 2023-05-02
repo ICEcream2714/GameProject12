@@ -1,4 +1,4 @@
-
+#include "Common_Function.h"
 #include "MainObject.h"
 
 MainObject::MainObject()
@@ -16,8 +16,9 @@ MainObject::~MainObject()
 
 }
 
-void MainObject::HandleInputAction(SDL_Event events, Mix_Chunk* bullet_sound[2])
+void MainObject::HandleInputAction(SDL_Event events, Mix_Chunk* bullet_sound[2], bool &exit)
 {
+
 	if (events.type == SDL_KEYDOWN)
 	{
 		switch (events.key.keysym.sym)
@@ -38,7 +39,8 @@ void MainObject::HandleInputAction(SDL_Event events, Mix_Chunk* bullet_sound[2])
 			x_val_ -= MAINOBJECT_MOVE_SPEED;
 			break;
 		case SDLK_ESCAPE:
-			;
+			exit = !exit;
+			break;
 		default:
 			break;
 		}
@@ -51,6 +53,7 @@ void MainObject::HandleInputAction(SDL_Event events, Mix_Chunk* bullet_sound[2])
 		case SDLK_s: y_val_ -= MAINOBJECT_MOVE_SPEED; break;
 		case SDLK_a: x_val_ += MAINOBJECT_MOVE_SPEED; break;
 		case SDLK_d: x_val_ -= MAINOBJECT_MOVE_SPEED; break;
+
 		}
 	}
 	else if (events.type == SDL_MOUSEBUTTONDOWN)

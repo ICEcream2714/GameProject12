@@ -25,10 +25,10 @@ int SDLCommonFunc::ShowMenu(SDL_Surface* des, TTF_Font* font)
 	const int kMenuItemNum = 3;
 
 	SDL_Rect pos_arr[kMenuItemNum];
-	pos_arr[0].x = 500;
+	pos_arr[0].x = 490;
 	pos_arr[0].y = 300;
 
-	pos_arr[1].x = 515;
+	pos_arr[1].x = 505;
 	pos_arr[1].y = 380;
 
 	pos_arr[2].x = 570;

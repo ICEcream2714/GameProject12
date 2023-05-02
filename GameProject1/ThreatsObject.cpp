@@ -95,7 +95,7 @@ void ThreatsObject::Reset(const int& xboder)
 {
 	rect_.x = xboder;
 
-	int rand_y = rand() % 600;
+	int rand_y = rand() % 600 + 40;
 	if (rand_y > SCREEN_HEIGHT)
 	{
 		rand_y = SCREEN_HEIGHT * 0.3;

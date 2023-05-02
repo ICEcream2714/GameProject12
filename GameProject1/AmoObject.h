@@ -10,7 +10,7 @@
 #define HEIGHT_SPHERE 10
 
 #define WIDTH_MISSILE 120
-#define HEIGHT_MISSILE 64
+#define HEIGHT_MISSILE 50
 
 class AmoObject : public BaseObject
 {

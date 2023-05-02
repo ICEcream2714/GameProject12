@@ -32,6 +32,7 @@ void BossObject::HandleMove(const int& x_border, const int& y_border)
 	{
 		rect_.x -= x_val_;
 	}
+
 	
 }
 
@@ -95,7 +96,7 @@ void BossObject::Reset(const int& xboder)
 
 void BossObject::ResetAmo(AmoObject* p_amo)
 {
-	p_amo->SetRect(rect_.x, rect_.y + rect_.h*0.5);
+	p_amo->SetRect(SCREEN_WIDTH, rect_.y);
 }
 
 void BossObject::set_clip()
