@@ -13,9 +13,10 @@
 #include <ctime>
 #include <vector>
 #include <cmath>
+#include <fstream>
 
 
-
+const int SPEED_HEALTH_ITEM = 1;
 
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 720;
@@ -27,8 +28,10 @@ const int THREAT_MOVE_SPEED = 3;
 
 const int BOSS_MOVE_SPEED = 2;
 const int BOSS_MISSILE_SPEED = 11;
+
 const int MAX_BOSS_HIT_COUNT = 10;
-const int ADD_MAX_BOSS_HIT_COUNT = 30;
+const int ADD_MAX_BOSS_HIT_COUNT = 20;
+const int TIME_UNTIL_BOSS = 7;
 
 const int MAINOBJECT_AMO_SPEED = 15;
 const int MAINOBJECT_MOVE_SPEED = 7;
@@ -37,7 +40,6 @@ const int MAINOBJECT_TIME_INVICIBLE = 5;
 const int POS_X_START_MAIN_OBJ = 100;
 const int POS_Y_START_MAIN_OBJ = 200;
 
-const int TIME_UNTIL_BOSS = 15;
 // rand() % 20 + 15
 
 static SDL_Surface* g_screen = NULL;
@@ -52,6 +54,9 @@ static Mix_Chunk* g_sound_bullet[2];
 static Mix_Chunk* g_sound_exp[2];
 static Mix_Music* g_background_music;
 
+static char g_name_highcore_file[] = { "text/highscore.txt" };
+static char g_name_health_item[] = { "gfx/HeartIcon.png" };
+
 static char g_name_background[] = { "gfx/background.png" };
 static char g_name_mainObject[] = { "gfx/PlaneObject.png" };
 static char	g_name_exp_main[] = { "gfx/Explosion1.png" };
@@ -62,7 +67,7 @@ static char g_name_amo_1[] = { "gfx/laser.png" };
 static char g_name_amo_2[] = { "gfx/sphere.png" };
 static char g_name_amo_3[] = { "gfx/sphere2.png" };
 
-static char g_name_missile[] = { "gfx/missile1.png" };
+static char g_name_missile[] = { "gfx/missile2.png" };
 
 static char g_name_main_power[] = { "gfx/HeartIcon.png" };
 static char g_name_start_background[] = { "gfx/start_bg.png" };

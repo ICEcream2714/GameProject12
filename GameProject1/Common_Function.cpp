@@ -17,11 +17,14 @@ int SDLCommonFunc::ShowMenu(SDL_Surface* des, TTF_Font* font)
 	g_img_menu = LoadImage(g_name_start_background);
 	g_tutorial = LoadImage(g_name_tutorial);
 
-	if (g_img_menu == NULL)
+	if (g_img_menu == NULL || g_tutorial == NULL)
 	{
 		return 1;
 	}
 
+	bool check_tutorial = false;
+
+	// Set text on MainMenu
 	const int kMenuItemNum = 3;
 
 	SDL_Rect pos_arr[kMenuItemNum];
@@ -49,13 +52,11 @@ int SDLCommonFunc::ShowMenu(SDL_Surface* des, TTF_Font* font)
 	text_menu[2].SetRect(pos_arr[2].x, pos_arr[2].y);
 
 
-	
 	bool selected[kMenuItemNum] = { 0, 0, 0 };
 
 	int xm = 0;
 	int ym = 0;
 
-	bool check_tutorial = false;
 
 	SDL_Event m_event;
 	while (true)
@@ -121,13 +122,6 @@ int SDLCommonFunc::ShowMenu(SDL_Surface* des, TTF_Font* font)
 					check_tutorial = true;
 				}
 
-					/*for (int i = 0; i < kMenuItemNum; i++)
-					{
-					if (CheckFocusWithRect(xm, ym, text_menu[i].GetRect()))
-					{
-					return 0;
-					}
-					}*/
 			}
 				break;
 

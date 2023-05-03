@@ -6,11 +6,13 @@
 #define WIDTH_LASER 35
 #define HEIGHT_LASER 5
 
+#define WIDTH_MISSILE 170
+#define HEIGHT_MISSILE 60
+
 #define WIDTH_SPHERE 10
 #define HEIGHT_SPHERE 10
 
-#define WIDTH_MISSILE 120
-#define HEIGHT_MISSILE 50
+
 
 class AmoObject : public BaseObject
 {

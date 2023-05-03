@@ -28,6 +28,12 @@ BossObject::~BossObject()
 
 void BossObject::HandleMove(const int& x_border, const int& y_border)
 {
+	int rand_y = rand() % 300 + 30;
+	if (rect_.x > 1280)
+	{
+		rect_.y = rand_y;
+	}
+
 	if (rect_.x > 900)
 	{
 		rect_.x -= x_val_;
@@ -60,7 +66,6 @@ void BossObject::InitAmo(AmoObject* p_amo)
 			p_amo->set_type(AmoObject::MISSILE);
 			p_amo->SetRect(rect_.x, rect_.y /* + rect_.h*0.5 */);
 			p_amo->set_x_val(BOSS_MISSILE_SPEED);
-			p_amo->set_y_val(BOSS_MISSILE_SPEED);
 			p_amo_list_.push_back(p_amo);
 		}
 	}
@@ -68,7 +73,6 @@ void BossObject::InitAmo(AmoObject* p_amo)
 
 void BossObject::MakeAmo(SDL_Surface* des, const int& x_limit, const int& y_limit, double y_amo)
 {
-
 	for (int i = 0; i < p_amo_list_.size(); i++)
 	{
 		
@@ -155,7 +159,7 @@ void BossObject::set_clip()
 
 void BossObject::ShowBossObject(SDL_Surface* des)
 {
-	if (frame_ >= 9)
+	if (frame_ > 9)
 	{
 		frame_ = 0;
 	}

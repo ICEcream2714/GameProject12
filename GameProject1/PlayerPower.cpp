@@ -49,3 +49,23 @@ void PlayerPower::Decrease()
 	number_--;
 	pos_list_.pop_back();
 }
+
+void PlayerPower::Increase()
+{
+	if (number_ < 3)
+	{
+		number_++;
+		switch (number_)
+		{
+		case 3:
+			pos_list_.emplace_back(120);
+			break;
+		case 2:
+			pos_list_.emplace_back(70);
+			break;
+		default:
+			break;
+		}
+	}
+	
+}

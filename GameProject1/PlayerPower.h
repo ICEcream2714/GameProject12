@@ -14,6 +14,7 @@ public:
 	void Render(SDL_Surface* des);
 	void Init();
 	void Decrease();
+	void Increase();
 private:
 	int number_;
 	std::vector <int> pos_list_;

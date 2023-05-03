@@ -11,6 +11,7 @@
 #define WIDTH_BOSS 215
 #define HEIGHT_BOSS 360
 
+
 class BossObject : public BaseObject
 {
 public:

@@ -86,6 +86,7 @@
     <ClCompile Include="BossObject.cpp" />
     <ClCompile Include="Common_Function.cpp" />
     <ClCompile Include="ExplosionObject2.cpp" />
+    <ClCompile Include="ItemObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainObject.cpp" />
     <ClCompile Include="ExplosionObject.cpp" />
@@ -100,6 +101,7 @@
     <ClInclude Include="Common_Function.h" />
     <ClInclude Include="ExplosionObject.h" />
     <ClInclude Include="ExplosionObject2.h" />
+    <ClInclude Include="ItemObject.h" />
     <ClInclude Include="MainObject.h" />
     <ClInclude Include="PlayerPower.h" />
     <ClInclude Include="TextObject.h" />

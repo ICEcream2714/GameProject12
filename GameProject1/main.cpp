@@ -7,6 +7,7 @@
 #include "PlayerPower.h"
 #include "TextObject.h"
 #include "BossObject.h"
+#include "ItemObject.h"
 
 
 
@@ -53,7 +54,7 @@ bool Init()
 		return false;
 	}
 
-
+	
 
 	return true;
 }
@@ -70,7 +71,7 @@ int main(int arc, char*argv[])
 		return 0;
 
 
-	SDL_WM_SetCaption("Space War", NULL);
+	SDL_WM_SetCaption("Space War", "gfx/Icon1.bmp");
 	SDL_WM_SetIcon(SDL_LoadBMP("gfx/Icon1.bmp"), NULL);
 
 	//--------- Apply background ---------
@@ -88,7 +89,9 @@ int main(int arc, char*argv[])
 	unsigned int highest_score_value = 0;
 	int pre_time_val = 0;
 
+	// Make random y
 	int main_rand_y = rand() % 600 + 60;
+
 
 SetRestart:
 
@@ -140,6 +143,15 @@ SetRestart:
 
 	AmoObject* p_amo_boss = new AmoObject();
 	boss_object.InitAmo(p_amo_boss);
+
+
+	// -------- Init Health Item --------
+
+	ItemObject health_item;
+	ret = health_item.LoadImg(g_name_health_item);
+	if (!ret)
+		return 0;
+	health_item.set_x_val(SPEED_HEALTH_ITEM);
 
 
 	//--------- Init ExplosionObject ----------
@@ -212,6 +224,7 @@ SetRestart:
 	double y_amo = 0;
 	bool boss_die = true;
 	bool exit = false;
+	bool show_health_item = false;
 
 	bool is_invicible = false;
 	Uint32 time_invicible = 0;
@@ -244,21 +257,25 @@ SetRestart:
 			plane_object.HandleInputAction(g_even, g_sound_bullet, exit);
 		}
 		
-		if (exit)
-		{
+		if (exit){
 			pre_time_val += time_val;
 			goto SetRestart;
 		}
 
-		if (time_val < time_invicible)
-		{
+		if (time_val < time_invicible){
 			is_invicible = true;
 		}
 		else
 			is_invicible = false;
 
-		if (boss_die == true)
+		if (boss_die == true){
 			boss_hit_cnt == 0;
+		}
+		else
+		{
+
+		}
+		
 
 		main_rand_y = rand() % 600 + 60;
 
@@ -291,11 +308,49 @@ SetRestart:
 
 		// ------- Run BossObject -------
 
-		if (time_val % TIME_UNTIL_BOSS == 0 && (time_val - boss_time) > 10 &&
+		if (time_val % TIME_UNTIL_BOSS == 0 && (time_val - boss_time) > TIME_UNTIL_BOSS &&
 			boss_die == true && boss_hit_cnt < max_boss_hit)
 		{
 			max_boss_hit += ADD_MAX_BOSS_HIT_COUNT;
 			boss_die = false;
+		}
+
+		// ------- Show Health Item -------
+
+		if (show_health_item == true)
+		{
+			health_item.HandleMove(SCREEN_WIDTH, SCREEN_HEIGHT);
+			health_item.Show(g_screen);
+
+			// Check collision btw MainObject & HealthItem
+
+			bool health_col = SDLCommonFunc::CheckCollision(plane_object.GetRect(), health_item.GetRect());
+
+			if (health_col)
+			{
+				die_number--;
+
+				player_power.Increase();
+				player_power.Render(g_screen);
+
+				//-------- Update screen --------
+				if (SDL_Flip(g_screen) == -1)
+				{
+					SDLCommonFunc::CleanUp();
+					SDL_Quit();
+					return 0;
+				}
+
+				show_health_item = false;
+
+				health_item.Reset(SCREEN_WIDTH);
+			}
+			else if (health_item.GetRect().x == -WIDTH_HEALTH_ITEM)
+			{
+				show_health_item = false;
+				health_item.Reset(SCREEN_WIDTH);
+			}
+				
 		}
 
 		if (time_val > TIME_UNTIL_BOSS)
@@ -436,6 +491,8 @@ SetRestart:
 							{
 								score_value += max_boss_hit - ADD_MAX_BOSS_HIT_COUNT;
 								boss_time = time_val;
+
+								show_health_item = true;
 
 								for (int m = 0; m < missile_arr.size(); m++)
 								{
@@ -646,7 +703,7 @@ SetRestart:
 			
 		}
 
-		
+		/*
 
 		// Show time for game
 		std::string str_time = "TIME ";
@@ -657,6 +714,7 @@ SetRestart:
 		time_game.SetRect(SCREEN_WIDTH - 270, 40);
 		time_game.CreateGameText(g_font_text, g_screen);
 
+		*/
 		
 
 		// Show score value to screen
@@ -691,10 +749,12 @@ SetRestart:
 
 	}
 
+
 	delete[] p_threats;
 
 	SDLCommonFunc::CleanUp();
 	SDL_Quit();
 
 	return 1;
+	
 }
