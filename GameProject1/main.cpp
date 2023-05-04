@@ -361,7 +361,7 @@ SetRestart:
 			{
 				Mix_PlayChannel(-1, g_sound_collect, 0);
 				
-				if (die_number <= 2)
+				if (die_number <= 2 && die_number > 0)
 					die_number--;
 
 				player_power.Increase();
