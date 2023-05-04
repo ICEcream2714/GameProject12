@@ -12,4 +12,4 @@ Người chơi điều khiển tàu vũ trụ chiến đấu với tàu địch.
 - Mục tiêu của trò chơi là tích nhiều điểm nhất có thể.
 
 ## Cách cài đặt
-- Tải thư mục Debug, chạy file *Space War.exe*.
+- Tải thư mục Debug, chạy file ***Space War.exe***.
