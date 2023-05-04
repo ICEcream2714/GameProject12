@@ -31,7 +31,7 @@ const int BOSS_MISSILE_SPEED = 11;
 
 const int MAX_BOSS_HIT_COUNT = 10;
 const int ADD_MAX_BOSS_HIT_COUNT = 20;
-const int TIME_UNTIL_BOSS = 7;
+const int TIME_UNTIL_BOSS = 10;
 
 const int MAINOBJECT_AMO_SPEED = 15;
 const int MAINOBJECT_MOVE_SPEED = 7;
@@ -47,6 +47,9 @@ static SDL_Surface* g_bkground = NULL;
 static SDL_Surface* g_img_menu = NULL;
 static SDL_Surface* g_tutorial = NULL;
 
+static SDL_Surface* g_img_die_menu = NULL;
+static SDL_Surface* g_img_pause_menu = NULL;
+
 
 static SDL_Event g_even;
 
@@ -54,26 +57,33 @@ static Mix_Chunk* g_sound_bullet[2];
 static Mix_Chunk* g_sound_exp[2];
 static Mix_Music* g_background_music;
 
+static Mix_Chunk* g_sound_select[2];
+static Mix_Chunk* g_sound_collect;
+
+
 static char g_name_highcore_file[] = { "text/highscore.txt" };
 static char g_name_health_item[] = { "gfx/HeartIcon.png" };
 
 static char g_name_background[] = { "gfx/background.png" };
-static char g_name_mainObject[] = { "gfx/PlaneObject.png" };
 static char	g_name_exp_main[] = { "gfx/Explosion1.png" };
 static char g_name_exp_threat[] = { "gfx/Explosion2.png" };
 
+static char g_name_mainObject[] = { "gfx/PlaneObject.png" };
 static char	g_name_threatObject[] = { "gfx/Enemy1.png" };
+static char g_name_boss_object[] = { "gfx/Boss-Idle1.png" };
+
 static char g_name_amo_1[] = { "gfx/laser.png" };
 static char g_name_amo_2[] = { "gfx/sphere.png" };
 static char g_name_amo_3[] = { "gfx/sphere2.png" };
-
 static char g_name_missile[] = { "gfx/missile2.png" };
 
 static char g_name_main_power[] = { "gfx/HeartIcon.png" };
+
 static char g_name_start_background[] = { "gfx/start_bg.png" };
 static char g_name_tutorial[] = { "gfx/Tutorial.png" };
+static char g_name_die_menu[] = { "gfx/die_menu.png" };
+static char g_name_pause_menu[] = { "gfx/pause_menu.png" };
 
-static char g_name_boss_object[] = { "gfx/Boss-Idle1.png" };
 
 static char g_name_font_score[] = { "font/prstart.ttf" };
 //static char g_name_font_menu[] = { "font/" }
@@ -84,6 +94,10 @@ static char g_name_audio_explosionSound1[] = { "sfx/Explosion2.wav" };
 static char g_name_audio_explosionSound2[] = { "sfx/Explosion1.wav" };
 static char g_name_audio_backgroundMusic[] = { "sfx/backgroundMusic2.wav" };
 
+static char g_name_audio_select_sound_1[] = { "sfx/select-sound.wav" };
+static char g_name_audio_select_sound_2[] = { "sfx/game-start.wav" };
+
+static char g_name_audio_collect_sound[] = { "sfx/game-bonus.wav" };
 
 namespace SDLCommonFunc
 {
@@ -93,7 +107,9 @@ namespace SDLCommonFunc
 	void CleanUp();
 	bool CheckCollision(const SDL_Rect& object1, const SDL_Rect& object2);
 
-	int ShowMenu(SDL_Surface* des, TTF_Font* font);
+	int ShowMenu(SDL_Surface* des, TTF_Font* font, Mix_Chunk* g_sound_select[]);
+	int ShowDiedMenu(SDL_Surface* des, TTF_Font* font, int highscore, Mix_Chunk* g_sound_select[]);
+	int ShowPauseMenu(SDL_Surface* des, TTF_Font* font, Mix_Chunk* g_sound_select[]);
 
 	bool CheckFocusWithRect(const int& x, const int& y, const SDL_Rect& rect);
 

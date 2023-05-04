@@ -4,7 +4,7 @@
 
 TextObject::TextObject()
 {
-	rect_.x = 530;
+	rect_.x = 535;
 	rect_.y = 10;
 	text_color_.r = 255;
 	text_color_.g = 255;
@@ -28,9 +28,14 @@ void TextObject::SetColor(const int& type)
 		SDL_Color color = { 255, 255, 255 };
 		text_color_ = color;
 	}
-	else
+	else if (type == BLACK_TEXT)
 	{
 		SDL_Color color = { 0, 0, 0 };
+		text_color_ = color;
+	}
+	else if (type == BLUE_TEXT)
+	{
+		SDL_Color color = { 110, 210, 180 };
 		text_color_ = color;
 	}
 }

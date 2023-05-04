@@ -13,6 +13,7 @@
 
 TTF_Font* g_font_text = NULL;
 TTF_Font* g_font_menu = NULL;
+TTF_Font* g_font_died_menu = NULL;
 
 bool Init()
 {
@@ -33,10 +34,17 @@ bool Init()
 	g_sound_exp[0] = Mix_LoadWAV(g_name_audio_explosionSound1);
 	g_sound_exp[1] = Mix_LoadWAV(g_name_audio_explosionSound2);
 
+	g_sound_select[0] = Mix_LoadWAV(g_name_audio_select_sound_1);
+	g_sound_select[1] = Mix_LoadWAV(g_name_audio_select_sound_2);
+
+	g_sound_collect = Mix_LoadWAV(g_name_audio_collect_sound);
+
 	g_background_music = Mix_LoadMUS(g_name_audio_backgroundMusic);
 
 	if (g_sound_exp[0] == NULL || g_sound_exp[1] == NULL
-		|| g_sound_bullet[0] == NULL || g_sound_bullet[1] == NULL)
+		|| g_sound_bullet[0] == NULL || g_sound_bullet[1] == NULL
+		|| g_sound_select[0] == NULL || g_sound_select[1] == NULL
+		|| g_sound_collect == NULL)
 	{
 		return false;
 	}
@@ -49,6 +57,7 @@ bool Init()
 
 	g_font_text = TTF_OpenFont(g_name_font_score, 20);
 	g_font_menu = TTF_OpenFont(g_name_font_score, 35);
+	g_font_died_menu = TTF_OpenFont(g_name_font_score, 30);
 	if (g_font_text == NULL || g_font_menu == NULL)
 	{
 		return false;
@@ -89,10 +98,12 @@ int main(int arc, char*argv[])
 	unsigned int highest_score_value = 0;
 	int pre_time_val = 0;
 
+	bool is_replay = false;
+
 	// Make random y
 	int main_rand_y = rand() % 600 + 60;
 
-
+	// ============ RESTART POINT ==============
 SetRestart:
 
 	int max_boss_hit = MAX_BOSS_HIT_COUNT;
@@ -230,20 +241,26 @@ SetRestart:
 	Uint32 time_invicible = 0;
 
 
-	// Init Main Menu
+	// ------- Show MainMenu --------
 
-	int ret_menu = SDLCommonFunc::ShowMenu(g_screen, g_font_menu);
-	if (ret_menu == 1)
+	if (is_replay == false)
 	{
-		is_quit = true;
+
+		int ret_menu = SDLCommonFunc::ShowMenu(g_screen, g_font_menu, g_sound_select);
+		if (ret_menu == 1)
+		{
+			is_quit = true;
+		}
+		if (ret_menu == 0)
+		{
+			pre_time_val += time_val;
+		}
 	}
-	if (ret_menu == 0)
-	{
-		pre_time_val += time_val;
-	}
+	else
+		is_replay = false;
 
 
-	//-------- Game Loop ----------
+	// =========== GAME LOOP ============
 
 	while (!is_quit) 
 	{
@@ -256,20 +273,33 @@ SetRestart:
 			}
 			plane_object.HandleInputAction(g_even, g_sound_bullet, exit);
 		}
-		
+
+		// Show PauseMenu if Player press ESC
 		if (exit){
-			pre_time_val += time_val;
-			goto SetRestart;
+			int pause_menu = SDLCommonFunc::ShowPauseMenu(g_screen, g_font_died_menu, g_sound_select);
+			if (pause_menu == 1)
+				is_quit = true;
+			if (pause_menu == 0)
+				exit = !exit;
+			if (pause_menu == 2)
+			{
+				is_replay = true;
+				goto SetRestart;
+			}
+			if (pause_menu == 3)
+				goto SetRestart;
 		}
 
+		// Invicible condition
 		if (time_val < time_invicible){
 			is_invicible = true;
 		}
 		else
 			is_invicible = false;
 
+		// Remake boss_hit_cnt
 		if (boss_die == true){
-			boss_hit_cnt == 0;
+			boss_hit_cnt = 0;
 		}
 		else
 		{
@@ -306,7 +336,7 @@ SetRestart:
 			frame_mainObject = 0;
 
 
-		// ------- Run BossObject -------
+		// ------- BossObject Condition -------
 
 		if (time_val % TIME_UNTIL_BOSS == 0 && (time_val - boss_time) > TIME_UNTIL_BOSS &&
 			boss_die == true && boss_hit_cnt < max_boss_hit)
@@ -314,6 +344,7 @@ SetRestart:
 			max_boss_hit += ADD_MAX_BOSS_HIT_COUNT;
 			boss_die = false;
 		}
+
 
 		// ------- Show Health Item -------
 
@@ -328,7 +359,10 @@ SetRestart:
 
 			if (health_col)
 			{
-				die_number--;
+				Mix_PlayChannel(-1, g_sound_collect, 0);
+				
+				if (die_number <= 2)
+					die_number--;
 
 				player_power.Increase();
 				player_power.Render(g_screen);
@@ -352,6 +386,8 @@ SetRestart:
 			}
 				
 		}
+
+		// ------- Run BossObject -------
 
 		if (time_val > TIME_UNTIL_BOSS)
 		{
@@ -400,7 +436,7 @@ SetRestart:
 
 				if ((is_col_missile || is_col_boss) && is_invicible == false)
 				{
-
+					is_invicible = true;
 					Mix_PlayChannel(-1, g_sound_exp[1], 0);
 					for (int ex = 0; ex < 7; ex++)
 					{
@@ -445,7 +481,21 @@ SetRestart:
 					{
 						SDL_Delay(1500);
 						pre_time_val += time_val;
-						goto SetRestart;
+
+						// Show Died-Menu
+						int died_menu = SDLCommonFunc::ShowDiedMenu(g_screen, g_font_died_menu, highest_score_value, g_sound_select);
+						if (died_menu == 1)
+							is_quit = true;
+						else if (died_menu == 0)
+						{
+							is_replay = true;
+							goto SetRestart;
+						}
+						else if (died_menu == 2)
+						{
+							is_replay = false;
+							goto SetRestart;
+						}
 
 					}
 
@@ -579,7 +629,7 @@ SetRestart:
 				//----- MainObject's Explosion gfx & sfx-----
 				if ((is_col || is_col1) && is_invicible == false)
 				{
-
+					is_invicible = true;
 					Mix_PlayChannel(-1, g_sound_exp[1], 0);
 					for (int ex = 0; ex < 7; ex++)
 					{
@@ -638,17 +688,22 @@ SetRestart:
 						delete[] p_threats;
 						SDL_Delay(1500);
 						pre_time_val += time_val;
-						goto SetRestart;
-						
-						//// MessageBox
-						//if (MessageBox(NULL, L"GAME OVER!", L"Info", MB_OK) == IDOK)
-						//{
-						//	delete[] p_threats;
-						//	SDLCommonFunc::CleanUp();
-						//	SDL_Quit();
-						//	return 1;
 
-						//}
+						// Show Died-Menu
+						int died_menu = SDLCommonFunc::ShowDiedMenu(g_screen, g_font_died_menu, highest_score_value, g_sound_select);
+						if (died_menu == 1)
+							return 1;
+						else if (died_menu == 0)
+						{
+							is_replay = true;
+							goto SetRestart;
+						}
+						else if (died_menu == 2)
+						{
+							is_replay = false;
+							goto SetRestart;
+						}
+						
 					}
 
 					
