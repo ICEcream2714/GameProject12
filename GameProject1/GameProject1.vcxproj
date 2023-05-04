@@ -14,6 +14,7 @@
     <ProjectGuid>{B6186280-541E-49CA-B209-89E4622E5265}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GameProject1</RootNamespace>
+    <ProjectName>Space War</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
