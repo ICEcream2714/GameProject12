@@ -14,5 +14,5 @@ Người chơi điều khiển tàu vũ trụ chiến đấu với tàu địch.
 ## Cách cài đặt:
 - Tải thư mục Debug, chạy file ***Space War.exe***.
 
-# Video Demo:
+## Video Demo:
 https://youtu.be/NciEC1hHBJ4
