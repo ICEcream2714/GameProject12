@@ -11,5 +11,8 @@ Người chơi điều khiển tàu vũ trụ chiến đấu với tàu địch.
 - Boss sau khi bị hạ gục sẽ rút lui và quay trở lại sau một khoảng thời gian tiếp. Mỗi lần Boss quay trở lại sẽ mạnh hơn trước.
 - Mục tiêu của trò chơi là tích nhiều điểm nhất có thể.
 
-## Cách cài đặt
+## Cách cài đặt:
 - Tải thư mục Debug, chạy file ***Space War.exe***.
+
+# Video Demo:
+https://youtu.be/NciEC1hHBJ4
